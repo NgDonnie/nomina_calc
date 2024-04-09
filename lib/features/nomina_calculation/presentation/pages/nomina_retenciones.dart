@@ -16,106 +16,146 @@ class NominaRetenciones extends StatelessWidget {
     String afp = afpCalculation(nomina);
     String pdss = pdssCalculation(nomina);
     String isr = isrCalculation(nomina);
+    double descuentos = double.parse(afp)+double.parse(pdss)+double.parse(isr);
+    double neto = double.parse(nomina) - descuentos;
+
+    String salarioNeto = neto.toString();
+    String totalDescuentos = descuentos.toString();
 
     const appTitle = 'Calculadora de Nomina';
     return Scaffold(
       appBar: AppBar(
         title: const Text(appTitle),
       ),
-      body: ListView(
+      body: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 20),
-            child: Card(
-              elevation: 10,
-              color: Colors.greenAccent,
-              child: Padding(
-                padding: const EdgeInsets.all(15),
-                child: Column(
-                  children: [
-                    Card(
-                      elevation: 8,
-                      color: Colors.white,
+          Expanded(
+            child: ListView(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 45, vertical: 20),
+                  child: Card(
+                    elevation: 10,
+                    color: Colors.greenAccent,
+                    child: Padding(
+                      padding: const EdgeInsets.all(15),
                       child: Column(
-                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          ListTile(
-                            title: Text(afp),
-                            subtitle: const Text('AFP'),
-                          )
-                        ]),
-                    ),
-                    /* Card(
-                      
-                      elevation: 3,
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(20),
-                        child: Text(sueldo),
-                        
-                      ),
-                    ), */
-                    
-                    const SizedBox(width: 12, height: 6,),
+                          Card(
+                            elevation: 8,
+                            color: Colors.white,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  title: Text(afp),
+                                  subtitle: const Text('AFP'),
+                                )
+                              ]),
+                          ),
+                          /* Card(
+                            
+                            elevation: 3,
+                            color: Colors.white,
+                            child: Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Text(sueldo),
+                              
+                            ),
+                          ), */
+                          
+                          const SizedBox(width: 12, height: 6,),
+          
+                          Card(
+                            elevation: 8,
+                            color: Colors.white,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  title: Text(pdss),
+                                  subtitle: const Text('PDSS'),
+                                )
+                              ]),
+                          ),
+                          
+                          const SizedBox(width: 12, height: 6,),
+          
+                          Card(
+                            elevation: 8,
+                            color: Colors.white,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  title: Text(isr),
+                                  subtitle: const Text('ISR'),
+                                )
+                              ]),
+                          ),
 
-                    Card(
-                      elevation: 8,
-                      color: Colors.white,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ListTile(
-                            title: Text(pdss),
-                            subtitle: const Text('PDSS'),
-                          )
-                        ]),
-                    ),
-                    
-                    const SizedBox(width: 12, height: 6,),
-
-                    Card(
-                      elevation: 8,
-                      color: Colors.white,
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          ListTile(
-                            title: Text(isr),
-                            subtitle: const Text('ISR'),
-                          )
-                        ]),
-                    ),
-                    /*
-                    const Card(
-                      elevation: 3,
-                      color: Colors.white,
-                      child: Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Text(
-                          'Card 2',
-                        ),
+                        ],
                       ),
                     ),
-                    
-                    const SizedBox(width: 12),
-                    
-                    const Card(
-                      elevation: 3,
-                      color: Colors.white,
-                      child: Padding(
-                        padding: EdgeInsets.all(20),
-                        child: Text(
-                          'Card 3',
-                        ),
-                      ),
-                    ),*/
-                  ],
+                  ),
                 ),
-              ),
+
+                const SizedBox(width: 12, height: 5,),
+
+                Card(
+                  elevation: 8,
+                  color: Colors.blueAccent,
+                  child: Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Padding(
+                      padding: const EdgeInsets.all(15),
+                      child: Column(
+                        children: [
+                          Card(
+                            elevation: 8,
+                            color: Colors.white,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  title: Text(totalDescuentos),
+                                  subtitle: const Text('TOTAL DESCUENTOS'),
+                                )
+                              ]),
+                          ),
+                                                    
+                          const SizedBox(width: 12, height: 6,),
+          
+                          Card(
+                            elevation: 8,
+                            color: Colors.white,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListTile(
+                                  title: Text(salarioNeto),
+                                  subtitle: const Text('SALARIO NETO'),
+                                )
+                              ]),
+                          ),
+                          
+                                    
+                          
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              
+              ],
             ),
           ),
+          
         ],
       ),
+
+      
+
 
     );
   }

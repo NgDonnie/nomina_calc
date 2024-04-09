@@ -13,6 +13,7 @@ class NominaRetenciones extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //String montoNomina = '60,000';
+    print(nomina);
 
     String afp = afpCalculation(nomina);
     String pdss = pdssCalculation(nomina);

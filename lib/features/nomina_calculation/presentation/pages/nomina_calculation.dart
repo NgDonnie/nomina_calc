@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+
+
 import 'package:nomina_calc/features/nomina_calculation/presentation/pages/nomina_retenciones.dart';
+import 'package:pattern_formatter/pattern_formatter.dart';
 
 class NominaCalcutation extends StatefulWidget {
   const NominaCalcutation({super.key});
@@ -11,7 +14,8 @@ class NominaCalcutation extends StatefulWidget {
 class _NominaCalcutationState extends State<NominaCalcutation> {
   final _formKey = GlobalKey<FormState>();
   final _nominaController = TextEditingController();
-  //bool _validate = false;
+  //bool _hideError = false;
+
 
     @override
   void dispose() {
@@ -21,12 +25,14 @@ class _NominaCalcutationState extends State<NominaCalcutation> {
 
   @override
   Widget build(BuildContext context) {
+    
     return GestureDetector(
       onTap: () {
         var f = FocusScope.of(context);
 
         if (!f.hasPrimaryFocus) {
           f.unfocus();
+
         }
       },
       child: Scaffold(
@@ -36,28 +42,37 @@ class _NominaCalcutationState extends State<NominaCalcutation> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+                padding: const EdgeInsets.only(right: 18.0),
+                child: Text('Cual es el monto de tu salario mensual?', 
+                            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.grey.shade700),
+                            textAlign: TextAlign.left,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: 20, left: 15, right: 15, top: 10),
                 child: SizedBox(
                   width: 300.0,
-                  child: /*TextField(
-                    controller: _nominaController,
-                    decoration: InputDecoration(
-                      labelText: 'Sueldo Mensual',
-                      border: const OutlineInputBorder(),
-                      hintText: 'Insert su sueldo mensual',
-                      errorText: _validate ? 'Campo no puede estar vacio.' : null
-                      
-                    ),
-                  ),*/
+                  child: 
                   Form(
                     key: _formKey,
+                    //autovalidateMode: AutovalidateMode.onUserInteraction,
                     child: TextFormField(
                       controller: _nominaController,
-                      keyboardType: TextInputType.number, // Only numeric input
-                      decoration: const InputDecoration(
-                      labelText: 'Enter a number',
-                                ),
+                      inputFormatters: [ThousandsFormatter(allowFraction: true)],
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true), // Only numeric input
+                      decoration: InputDecoration(
+                        //errorStyle:  const TextStyle(color: Colors.transparent, fontSize: 0, height: 0),
+                        labelText: 'Ingrese el sueldo mensual',
+                      //labelStyle: TextStyle( color: Colors.blueGrey[300]),
+                        suffixIcon: IconButton(
+                          onPressed: (){
+                            _nominaController.clear();
+                            
+                          }, 
+                          icon: const Icon(Icons.clear))
+                      ),
                       validator: _validateInput,
+                      
                     ),
                   ),
 
@@ -73,16 +88,19 @@ class _NominaCalcutationState extends State<NominaCalcutation> {
                       style: TextStyle(fontSize: 18),
                     ),
                     onPressed: () {
-
                       
-                     if (_formKey.currentState!.validate()) {
-                  // Valid input, do something with it
-                  final value = int.parse(_nominaController.text);
-                  _sendDataToSecondScreen(context);
-                  // ignore: avoid_print
-                  print('Valid input: $value');
-                }
+                      print(_nominaController.text);
+                      var formatNumb = _nominaController.text.replaceAll(RegExp(r'[^0-9]'), '');
+                      print(formatNumb);
+                      
+                      if (_formKey.currentState!.validate()) {
+                        // Valid input, do something with it
+                        // ignore: unused_local_variable
+                        final value = int.parse(formatNumb);
+                    
+                        _sendDataToSecondScreen(context);
 
+                      }
         
                     },
                   ),
@@ -97,7 +115,7 @@ class _NominaCalcutationState extends State<NominaCalcutation> {
   }
 
  void _sendDataToSecondScreen(BuildContext context) {
-    String textToSend = _nominaController.text;
+    String textToSend = _nominaController.text.replaceAll(RegExp(r'[^0-9]'), '');
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -106,15 +124,24 @@ class _NominaCalcutationState extends State<NominaCalcutation> {
   }
 
   String? _validateInput(String? value) {
+    String formatNum = value.toString().replaceAll(RegExp(r'[^0-9]'), '');
+    
+
+    print('el valor de value dentro del if: ${formatNum}');
     if (value == null || value.isEmpty) {
-      return 'Please enter a value';
+      //print('1er if');
+      return 'Favor de ingresar un valor';
     }
     
-    final number = int.tryParse(value);
+    final number = int.parse(formatNum);
+    print('el valor de NUMBER dentro del if: ${number}');
 
-    if (number == null || number <= 0) {
-      return 'Please enter a value greater than zero';
+    if (number <= 0) {
+      return 'Favor de ingresar un valor mayor que cero';
     }
+    //print('llego al final de la funcion');
+    //return '';
+
     return null;
   }
 

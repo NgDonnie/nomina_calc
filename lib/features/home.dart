@@ -11,8 +11,9 @@ class HomeNomina extends StatefulWidget {
 class _HomeNominaState extends State<HomeNomina> {
   @override
   Widget build(BuildContext context) {
-    const appTitle = 'Calculadora de Nomina';
+    const appTitle = 'Calculadora de Salario Mensual';
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: appTitle,
       home: Scaffold(
         appBar: AppBar(

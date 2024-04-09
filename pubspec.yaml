@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.18.1
+  pattern_formatter: ^3.0.0
 
 dev_dependencies:
   flutter_test:

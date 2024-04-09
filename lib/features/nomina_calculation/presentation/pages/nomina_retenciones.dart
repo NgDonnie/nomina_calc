@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NominaRetenciones extends StatelessWidget {
   
@@ -21,6 +22,14 @@ class NominaRetenciones extends StatelessWidget {
 
     String salarioNeto = neto.toString();
     String totalDescuentos = descuentos.toString();
+
+    NumberFormat numberFormat = NumberFormat.decimalPattern();
+
+    getFormatedNumber(String value){
+      var number =  numberFormat.format(double.parse(value));
+      return number;
+    }
+
 
     const appTitle = 'Calculadora de Nomina';
     return Scaffold(
@@ -48,22 +57,12 @@ class NominaRetenciones extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 ListTile(
-                                  title: Text(afp),
+                                  title: Text(getFormatedNumber(afp)),
                                   subtitle: const Text('AFP'),
                                 )
                               ]),
                           ),
-                          /* Card(
-                            
-                            elevation: 3,
-                            color: Colors.white,
-                            child: Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: Text(sueldo),
-                              
-                            ),
-                          ), */
-                          
+                                                    
                           const SizedBox(width: 12, height: 6,),
           
                           Card(
@@ -73,7 +72,7 @@ class NominaRetenciones extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 ListTile(
-                                  title: Text(pdss),
+                                  title: Text(getFormatedNumber(pdss)),
                                   subtitle: const Text('PDSS'),
                                 )
                               ]),
@@ -88,7 +87,7 @@ class NominaRetenciones extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 ListTile(
-                                  title: Text(isr),
+                                  title: Text(getFormatedNumber(isr)),
                                   subtitle: const Text('ISR'),
                                 )
                               ]),
@@ -118,7 +117,7 @@ class NominaRetenciones extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 ListTile(
-                                  title: Text(totalDescuentos),
+                                  title: Text(getFormatedNumber(totalDescuentos)),
                                   subtitle: const Text('TOTAL DESCUENTOS'),
                                 )
                               ]),
@@ -133,7 +132,7 @@ class NominaRetenciones extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 ListTile(
-                                  title: Text(salarioNeto),
+                                  title: Text(getFormatedNumber(salarioNeto)),
                                   subtitle: const Text('SALARIO NETO'),
                                 )
                               ]),
@@ -159,6 +158,7 @@ class NominaRetenciones extends StatelessWidget {
 
     );
   }
+
 
 //ARS RETENCION
 

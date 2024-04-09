@@ -9,7 +9,7 @@ class NominaCalcutation extends StatefulWidget {
 }
 
 class _NominaCalcutationState extends State<NominaCalcutation> {
-  final _formKey = new GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>();
   final _nominaController = TextEditingController();
   //bool _validate = false;
 
